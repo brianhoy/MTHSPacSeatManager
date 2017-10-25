@@ -12,11 +12,12 @@ import javax.servlet.http.HttpSession;
 import java.sql.*;  
 
 
-public class RequestShowsAction extends ActionSupport {
+public class ViewShowAction extends ActionSupport {
 	ArrayList<ShowStore> shows;
 	
 	int helloCount = 5;
 	
+	// todo: change everything
     public String execute() {    	
     	shows = new ArrayList<ShowStore>();
     	try {

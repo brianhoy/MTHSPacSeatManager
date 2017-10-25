@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="s" uri="/struts-tags" %>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>MTHS Performing Arts Center - Admin Login</title>
-  </head>
-  <body>
-  	<h1>MTHS Performing Arts Center</h1>
-  	<h2>Admin Login</h2>
-  </body>
-</html>
+<jsp:include page="index.jsp"></jsp:include>  
+<hr/>  
+<%@ taglib uri="/struts-tags" prefix="s" %>  
+  
+<s:form action="loginprocess">  
+<s:textfield name="username" label="Name"></s:textfield>  
+<s:password name="userpass" label="Password"></s:password>  
+<s:submit value="login"></s:submit>  
+</s:form>  

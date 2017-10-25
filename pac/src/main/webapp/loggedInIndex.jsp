@@ -3,11 +3,13 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Middle Township Performing Arts Center</title>
+    <title>Basic Struts 2 Application - Welcome</title>
   </head>
   <body>
-    <h1>Middle Township Performing Arts Center</h1>
+    <h1>Welcome To Struts 2!</h1>
    		<a href="index">shows</a> 
-		<a href="login.jsp">admin login</a> 
+		<a href="logout">logout</a> 
+		<a href="profile">profile</a>
+		<a href="addshow.jsp">add show</a>  
   </body>
 </html>

@@ -1,0 +1,8 @@
+CREATE TABLE Shows (
+	ID int NOT NULL AUTO_INCREMENT,
+	Date datetime,
+	Title nvarchar(500),
+	Description nvarchar(3999),
+	Image_Path varchar(1024),
+	PRIMARY KEY(ID)
+);
