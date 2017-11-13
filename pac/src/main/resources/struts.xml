@@ -11,11 +11,13 @@
         <action name="index" class="org.apache.struts.pac.action.RequestShowsAction" method="execute">
             <result name="success">showview.jsp</result>
             <result name="success_loggedin">adminshowview.jsp</result>
+            <result name="error">showview.jsp</result>
+            <result name="error_loggedin">adminshowview.jsp</result>
         </action>
         
         <action name="loginprocess" class="org.apache.struts.pac.action.Login">
             <result name="success">loginsuccess.jsp</result>
-            <result name="error">loginerror.jsp</result>
+            <result name="error">login.jsp</result>
         </action>
         
         <action name="logout" class="org.apache.struts.pac.action.Login" method="logout">
@@ -28,10 +30,15 @@
 		</action>
 		
 		<action name="addshow" class="org.apache.struts.pac.action.AddShowAction" method="execute">
-			<result name="success">addshowsuccess.jsp</result>
-			<result name="error">addshowerror.jsp</result>
+			<result name="success">addshow.jsp</result>
+			<result name="error">addshow.jsp</result>
+			<result name="notloggedin">login.jsp</result>
 		</action>
 		
+		<action name="editshow" class="org.apache.struts.pac.action.EditShowAction" method="execute">
+			<result name="success">editshow.jsp</result>
+			<result name="error">login.jsp</result>
+		</action>
     </package>
 
 </struts>

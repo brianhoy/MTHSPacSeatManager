@@ -1,7 +1,9 @@
 <jsp:include page="loggedInIndex.jsp"></jsp:include>  
 <%@ taglib uri="/struts-tags" prefix="s" %>  
 
-<h2>Shows:</h2>  
+<h2>Shows (admin view):</h2>
+<s:property value="msg"/>
+<s:property value="errorMsg"/>
 <s:iterator value="shows">  
 	<fieldset>
 		<h3>
@@ -13,5 +15,9 @@
 		<strong>
 		<label>Date: </label>		</strong>
 			<s:property value="date"/><br/>
+			
+		<s:action name="editshow">
+			<s:param name="showid">%{show.id}</s:param>
+		</s:action>
 	</fieldset>  
 </s:iterator>  

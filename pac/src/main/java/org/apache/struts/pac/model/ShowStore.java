@@ -1,6 +1,7 @@
 package org.apache.struts.pac.model;
 
 public class ShowStore {
+	private int id;
 	private String name;
 	private String description;
 	private String date;
@@ -10,6 +11,12 @@ public class ShowStore {
 	}
 	public String getName() {
 		return name;
+	}
+	public void setId(int id_) {
+		id = id_;
+	}
+	public int getId() {
+		return id;
 	}
 	public void setDescription(String description_) {
 		description = description_;
