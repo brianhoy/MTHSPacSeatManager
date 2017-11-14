@@ -1,23 +1,22 @@
-package org.apache.struts.pac.action;
-
-import org.apache.struts.pac.model.ShowStore;
-import org.apache.struts.pac.other.Utils;
-import org.apache.struts2.ServletActionContext;
-import com.opensymphony.xwork2.util.ValueStack;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import java.sql.*;
+import com.opensymphony.xwork2.config.entities.Parameterizable;
 
-public class EditShowAction extends ActionSupport {
+public class RemoveShowAction extends ActionSupport implements Parameterizable {
 	public int showid = -1;
 	public ShowStore currentlyEditedShow;
+	private Map<String, String> params = new HashMap<String, String>();
+
+	public void addParam(String key, String value) {
+		this.params.put(key, value);
+	}
+
+	public Map<String, String> getParams() {
+		return this.params;
+	}
+
+	public void setParams(Map<String, String> params) {
+		this.params = params;
+	}
 
 	public String execute() {
 		ValueStack stack = ActionContext.getContext().getValueStack();

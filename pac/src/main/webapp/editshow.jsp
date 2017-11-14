@@ -4,12 +4,12 @@
 <h2>Edit Show:</h2>  
 <fieldset>
 	<h3>
-		<s:property value="name"/><br/>
+		<s:property value="currentlyEditedShow.name"/><br/>
 	</h3>
 	<p>
-		<s:property value="description"/><br/>
+		<s:property value="currentlyEditedShow.description"/><br/>
 	</p>
 	<strong>
 	<label>Date: </label>		</strong>
-		<s:property value="date"/><br/>
+		<s:property value="currentlyEditedShow.date"/><br/>
 </fieldset>  

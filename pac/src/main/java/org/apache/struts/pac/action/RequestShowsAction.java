@@ -25,14 +25,6 @@ public class RequestShowsAction extends ActionSupport {
 		shows = Utils.getShows();
 
 		String addon = "";
-		if(localIsLoggedIn() != Utils.isLoggedIn()) {
-			Utils.pushError("Mismatch.");
-			System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE mismatch");
-		}
-		else {
-			Utils.pushMessage("No mismatch.");
-			System.out.println("FEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE no mismatch");
-		}
 		
 		if (Utils.isLoggedIn()) {
 			addon += "_loggedin";

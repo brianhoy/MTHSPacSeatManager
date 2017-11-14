@@ -144,6 +144,76 @@ public final class Utils {
 		return shows;
 	}
 
+	public static ShowStore getShow(int id) {
+		ShowStore show = new ShowStore();
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		boolean error = false;
+		
+		System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+		
+		try {
+			con = DriverManager.getConnection(dbUrl, user, password);
+			ps = con.prepareStatement("SELECT ID, Date, Title, Description, Image_Path FROM Shows WHERE ID=" + id);
+			rs = ps.executeQuery();
+		
+			int numShowsWithId = 0;
+			
+			while (rs.next()) {
+				numShowsWithId++;
+				
+				ShowStore temp = new ShowStore();
+		
+				//int id = rs.getInt("ID");
+				String date = rs.getString("Date");
+				String title = rs.getString("Title");
+				String description = rs.getString("Description");
+				String image_path = rs.getString("Image_Path");
+		
+				temp.setName(title);
+				temp.setDescription(description);
+				temp.setDate(date);
+				temp.setId(id);
+				
+				show = temp;
+			}
+			
+			if(numShowsWithId == 0) {
+				error = true;
+			}
+			else if(numShowsWithId != 1){
+				System.out.println("!!!PAC WARNING: Multiple shows with ID " + id);
+			}
+		} catch (Exception e) {
+			System.out.println("!!!PAC ERROR: Unable to getShows in Utils.");
+			e.printStackTrace();
+			error = true;
+		} finally {
+			try {
+				rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				con.close();
+			} catch (Exception e) {
+			}
+		}
+		if (error) {
+			return null;
+		}
+		
+		System.out.println("Successfully retrieved show with title " + show.getName());
+		
+		return show;
+	}
+	
 	public static void pushError(String error) {
 		ValueStack stack = ActionContext.getContext().getValueStack();
 		Map<String, Object> context = new HashMap<String, Object>();
