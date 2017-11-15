@@ -77,10 +77,6 @@ public final class Utils {
 		return result;
 	}
 
-	public static void deleteShow(int id) {
-
-	}
-
 	public static boolean validateLogin(String username, String password) {
 		if (username.equals("defuser") && password.equals("defpass")) {
 			return true;
@@ -237,5 +233,80 @@ public final class Utils {
 		String s = (String) session.getAttribute("login");
 
 		return s != null && !s.equals("");
+	}
+
+	public static boolean removeShow(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		boolean result = false;
+
+		try {
+			con = DriverManager.getConnection(dbUrl, user, password);
+			ps = con.prepareStatement("DELETE FROM Shows WHERE ID=" + id);
+
+			int status = ps.executeUpdate();
+
+			if (status > 0) {
+				result = true;
+			}
+		} catch (Exception e) {
+			System.out.println("!!!PAC ERROR: Unable to remove show with id " + id + " in Utils.");
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				con.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return result;
+	}
+
+	public static boolean editShow(ShowStore show) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		boolean result = false;
+
+		try {
+			con = DriverManager.getConnection(dbUrl, user, password);
+			
+			String command = "UPDATE Shows SET "
+					+ "Date='" + show.getDate() 
+					+ "', Title='" + show.getName() 
+					+ "', Description='" + show.getDescription() 
+					+ "', Image_Path='show_image_path.png'" 
+					+ " WHERE ID=" + show.getId() + ";";
+			
+			System.out.println("SQL Edit show command: \n" + command);
+
+					
+			ps = con.prepareStatement(command);
+
+			int status = ps.executeUpdate();
+
+			if (status > 0) {
+				result = true;
+			}
+		} catch (Exception e) {
+			System.out.println("!!!PAC ERROR: Unable to edit show in Utils.");
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				con.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return result;
 	}
 }

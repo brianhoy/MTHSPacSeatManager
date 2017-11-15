@@ -2,8 +2,6 @@
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
 <h2>Shows:</h2>
-<s:property value="msg"/>
-<s:property value="errorMsg"/>
 <s:iterator value="shows">
 	<fieldset>
 		<h3>

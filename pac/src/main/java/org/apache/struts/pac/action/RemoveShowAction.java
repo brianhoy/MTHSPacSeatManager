@@ -1,45 +1,50 @@
+package org.apache.struts.pac.action;
+
+import org.apache.struts.pac.model.ShowStore;
+import com.opensymphony.xwork2.util.ValueStack;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import org.apache.struts.pac.other.Utils;
+import org.apache.struts2.ServletActionContext;
+
 import java.sql.*;
-import com.opensymphony.xwork2.config.entities.Parameterizable;
 
-public class RemoveShowAction extends ActionSupport implements Parameterizable {
-	public int showid = -1;
+public class RemoveShowAction extends ActionSupport {
+	private int showid = -1;
 	public ShowStore currentlyEditedShow;
-	private Map<String, String> params = new HashMap<String, String>();
-
-	public void addParam(String key, String value) {
-		this.params.put(key, value);
-	}
-
-	public Map<String, String> getParams() {
-		return this.params;
-	}
-
-	public void setParams(Map<String, String> params) {
-		this.params = params;
-	}
 
 	public String execute() {
 		ValueStack stack = ActionContext.getContext().getValueStack();
-		// Object value = stack.findValue("showid");
+		Map<String, Object> context = new HashMap<String, Object>();
 
 		int showid = Integer.parseInt(ServletActionContext.getRequest().getParameter("showid"));
 
 		if (Utils.isLoggedIn() && showid != -1) {
-			currentlyEditedShow = Utils.getShow(showid);
+			boolean result = Utils.removeShow(showid);
 
+			if(result == false) {
+				context.put("errorMsg", new String("Unable to delete show with id " + showid + "."));
+				stack.push(context);
+
+				return "error";
+			}
+			
+			context.put("msg", new String("Sucessfully deleted show with id " + showid + "."));
+			stack.push(context);
+			
 			return "success";
 		}
 
-		Map<String, Object> context = new HashMap<String, Object>();
 
 		context.put("errorMsg", new String("You must be logged in to edit a show. (showid = " + showid + ")"));
 		stack.push(context);
 
 		return "error";
 	}
-
-	public void finishEdit() {
-
-	}
-
 }

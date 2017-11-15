@@ -16,31 +16,58 @@ import javax.servlet.http.HttpSession;
 import java.sql.*;
 
 public class EditShowAction extends ActionSupport {
-	public int showid = -1;
-	public ShowStore currentlyEditedShow;
+	private int showid = -1;
+	private ShowStore currentlyEditedShow;
+	private ShowStore show; // used in the form
 
 	public String execute() {
-		ValueStack stack = ActionContext.getContext().getValueStack();
-		// Object value = stack.findValue("showid");
-
 		int showid = Integer.parseInt(ServletActionContext.getRequest().getParameter("showid"));
 
 		if (Utils.isLoggedIn() && showid != -1) {
 			currentlyEditedShow = Utils.getShow(showid);
 
+			if (currentlyEditedShow == null) {
+				Utils.pushError("Unable to retrieve show " + showid + " for editing.");
+
+				return "error";
+			}
+
 			return "success";
 		}
 
-		Map<String, Object> context = new HashMap<String, Object>();
-
-		context.put("errorMsg", new String("You must be logged in to edit a show. (showid = " + showid + ")"));
-		stack.push(context);
-
-		return "error";
+		Utils.pushError("You must be logged in to edit a show.");
+		
+		return "notloggedin";
 	}
 
-	public void finishEdit() {
-
+	public ShowStore getShow() {
+		return show;
 	}
 
+	public void setShow(ShowStore show) {
+		this.show = show;
+	}
+
+	public ShowStore getCurrentlyEditedShow() {
+		return currentlyEditedShow;
+	}
+
+	public String finishEdit() {
+		if (Utils.isLoggedIn()) {
+			boolean result = Utils.editShow(show);
+
+			if (!result) {
+				Utils.pushError("Failed to edit show " + show.getId() + " with title " + show.getName()
+						+ ". Check the console.");
+
+				return "error";
+			}
+			Utils.pushMessage("Successfully updated show \"" + show.getName() + "\".");
+
+			return "success";
+		}
+		Utils.pushError("You must be logged in to submit a show edit.");
+
+		return "notloggedin";
+	}
 }
