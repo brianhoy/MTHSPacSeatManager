@@ -31,6 +31,7 @@ public class Login implements SessionAware {
 		ValueStack stack = ActionContext.getContext().getValueStack();
 
 	    if(username.equals("defuser") && userpass.equals("defpass")) {
+		    sessionmap.put("login","true");  
 	        return "success";
 	    }  
 	    else {  
@@ -44,7 +45,6 @@ public class Login implements SessionAware {
 	  
 	public void setSession(Map map) {  
 	    sessionmap = (SessionMap<String,String>)map;  
-	    sessionmap.put("login","true");  
 	}  
 	  
 	public String logout(){  

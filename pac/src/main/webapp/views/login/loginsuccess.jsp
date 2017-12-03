@@ -1,4 +1,4 @@
-<jsp:include page="loggedInIndex.jsp"></jsp:include>  
+<jsp:include page="../index/loggedInIndex.jsp"></jsp:include>  
 <hr/>  
 <%@ taglib uri="/struts-tags" prefix="s" %>  
   

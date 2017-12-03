@@ -1,7 +1,8 @@
-<jsp:include page="loggedInIndex.jsp"></jsp:include>  
+<jsp:include page="../index/loggedInIndex.jsp"></jsp:include>
+
 <%@ taglib uri="/struts-tags" prefix="s" %>  
 
-<h2>Edit Show:</h2>  
+<h2>Edit Show</h2>  
 <fieldset>
 	<s:form action="finishshowedit">
 		<s:hidden name="show.id" value="%{currentlyEditedShow.id}" />
@@ -18,3 +19,5 @@
 		<s:property value="'Remove'"></s:property>
 	</s:a></td>
 </fieldset>  
+
+<jsp:include page="../index/indexfooter.jsp"></jsp:include>  
