@@ -3,7 +3,7 @@
 }
 
 .spacing {
-	margin: 5px;
+	margin-top: 8px;
 }
 
 .root {
@@ -18,4 +18,18 @@
 
 h2 {
 	text-align: center;
+}
+
+.asSpan {
+	display: block;
+    overflow: hidden;
+    padding-right:10px;
+}
+
+.asBtn {
+	float: right;
+}
+.asDiv {
+	width: 270px;
+	display: inline-block;
 }

@@ -5,6 +5,7 @@
 
 <struts>
     <constant name="struts.devMode" value="true" />
+	<constant name="struts.ui.theme" value="simple"/>
 
     <package name="basicstruts2" extends="struts-default">
         <action name="index" class="org.apache.struts.pac.action.RequestShowsAction" method="execute">
@@ -24,31 +25,32 @@
         </action>
         
         <action name="profile" class="org.apache.struts.pac.action.Profile">  
-			<result name="success" >/views/profile/profilesuccess.jsp</result>  
-			<result name="error">/views/profile/profileerror.jsp</result>  
+			<result name="success" >/views/profile/profile.jsp</result>  
+			<result name="error">/views/login/login.jsp</result>  
 		</action>
 		
 		<action name="addshow" class="org.apache.struts.pac.action.AddShowAction" method="execute">
-			<result name="success">/views/shows/addshow.jsp</result>
+			<result name="success" type="chain">index</result>
 			<result name="error">/views/shows/addshow.jsp</result>
 			<result name="notloggedin">/views/login/login.jsp</result>
 		</action>
 		
 		<action name="editshow" class="org.apache.struts.pac.action.EditShowAction" method="execute">
 			<result name="success">/views/shows/editshow.jsp</result>
-			<result name="error">/views/shows/adminshowview.jsp</result>
+			<result name="error" type="chain">index</result>
 			<result name="notloggedin">/views/login/login.jsp</result>
 		</action>
 		
 		<action name="finishshowedit" class="org.apache.struts.pac.action.EditShowAction" method="finishEdit">
-			<result name="success">/views/login/loggedInIndex.jsp</result>
-			<result name="error">/views/shows/adminshowview.jsp</result>
+			<result name="success" type="chain">index</result>
+			<result name="error" type="chain">index</result>
 			<result name="notloggedin">/views/login/login.jsp</result>
 		</action>
 		
 		<action name="removeshow" class="org.apache.struts.pac.action.RemoveShowAction" method="execute">
-			<result name="success">/views/adminshowview.jsp</result>
-			<result name="error">/views/adminshowview.jsp</result>
+			<result name="success" type="chain">index</result>
+			<result name="error" type="chain">index</result>
+			<result name="notloggedin">/views/login/login.jsp</result>
 		</action>
     </package>
 

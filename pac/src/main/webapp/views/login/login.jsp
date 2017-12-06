@@ -4,14 +4,21 @@
 <div class="root column col-6 col-xs-12">
 	<h1>Login</h1>
 	<s:form action="loginprocess">
-		<s:textfield cssClass="form-input" name="username" label="Name"></s:textfield>  
-		<s:password cssClass="form-input" name="userpass" label="Password"></s:password>  
-		<s:submit cssClass="btn btn-primary" value="Login"></s:submit>  
+		<div class="form-group">
+			<label class="form-label" for="username">Username</label>
+			<input class="form-input" id="username" type="text" name="username" placeholder="JohnSmith" />
+		</div>
+		<div class="form-group">
+			<label class="form-label" for="password">Password</label>
+			<input class="form-input" id="password" type="password" name="password" placeholder="Password"/>
+		</div>
+
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary">
+				Sign in
+			</button>
+		</div>
 	</s:form>
-	<br />
-	<div class="text-error">
-		<s:property value="errorMsg"/><br/>
-	</div> 
 </div>
 
 

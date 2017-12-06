@@ -1,6 +1,6 @@
 package org.apache.struts.pac.action;
 
-import org.apache.struts.pac.model.ShowStore;
+import org.apache.struts.pac.model.Show;
 import org.apache.struts.pac.other.Utils;
 import org.apache.struts2.ServletActionContext;
 
@@ -18,36 +18,40 @@ import com.opensymphony.xwork2.ActionContext;
 import java.util.HashMap;
 
 public class AddShowAction extends ActionSupport {
-	private ShowStore show;
+	private Show show;
 	int status = 0;
 
-	public String execute() {
-		ValueStack stack = ActionContext.getContext().getValueStack();
-		Map<String, Object> context = new HashMap<String, Object>();
-				
+	public String execute() {			
 		if (!Utils.isLoggedIn()) {
-			context.put("errorMsg", new String("You must be logged in to add a show."));
-			stack.push(context);
+			Utils.pushError("You must be logged in to add a show.");
 			return "notloggedin";
 		}
 
-		boolean success = Utils.addShow(show);
+		Utils.pushError("dates string: " + show.getDates());
+		
+		ArrayList<java.util.Date> parsedDates = Utils.parseDates(show.getDates());
+		
+		Utils.pushMessage("Parsed dates string: " + parsedDates.toString());
+		
+		return "error";
+		
+		/*String result = Utils.addShow(show);
 
-		if (success) {
+		if (result.equals("success")) {
 			Utils.pushMessage("Successfully added show \"" + show.getName() + "\".");
 
 			return "success";
 		} else {
-			Utils.pushError("Unable to add show. Ensure the SQL database is running and that it is configured correctly.");
+			Utils.pushError("Unable to add show. Error: " + result);
 			return "error";
-		}
+		}*/
 	}
 
-	public ShowStore getShow() {
+	public Show getShow() {
 		return show;
 	}
 
-	public void setShow(ShowStore show) {
+	public void setShow(Show show) {
 		this.show = show;
 	}
 	

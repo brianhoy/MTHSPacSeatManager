@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 
 public final class Utils {
 	private static String dbUrl;
@@ -40,17 +41,40 @@ public final class Utils {
 		// con = DriverManager.getConnection(dbUrl, user, password);
 	}
 
-	public static boolean addShow(ShowStore show) {
+	// sorted
+	public static ArrayList<java.util.Date> parseDates(String datesString) {
+		ArrayList<java.util.Date> dates = new ArrayList<java.util.Date>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
+
+		String[] stringArray = datesString.split(", ");
+
+		try {
+			for(int i = 0; i < stringArray.length; i++) {
+				String strDate = stringArray[i];
+				java.util.Date date = sdf.parse(strDate);
+				dates.add(date);
+			}
+		}
+		catch(java.text.ParseException e) {
+			pushError("Error parsing inputted dates: " + e.getMessage());
+			System.out.println("Util.parseDates error: " + e.getMessage());
+			return null;
+		}
+		
+		return dates;
+	}
+	
+	public static String addShow(ShowStore show) {
 		Connection con = null;
 		PreparedStatement ps = null;
 
-		boolean result = false;
+		String result = "error";
 
 		try {
 			con = DriverManager.getConnection(dbUrl, user, password);
 			ps = con.prepareStatement("INSERT INTO Shows (Date, Title, Description, Image_Path) values(?,?,?,?)");
 
-			ps.setString(1, show.getDate());
+			ps.setString(1, show.getDates());
 			ps.setString(2, show.getName());
 			ps.setString(3, show.getDescription());
 			ps.setString(4, "show_image_path.png");
@@ -58,25 +82,22 @@ public final class Utils {
 			int status = ps.executeUpdate();
 
 			if (status > 0) {
-				result = true;
+				result = "success";
 			}
 		} catch (Exception e) {
 			System.out.println("!!!PAC ERROR: Unable to add show in Utils.");
+			result = e.getMessage();
 			e.printStackTrace();
 		} finally {
-			try {
-				ps.close();
-			} catch (Exception e) {
-			}
-			try {
-				con.close();
-			} catch (Exception e) {
-			}
+			try { ps.close(); } catch (Exception e) {}
+			try { con.close(); } catch (Exception e) {}
 		}
 
 		return result;
 	}
 
+	public static String addShowDate()
+	
 	public static boolean validateLogin(String username, String password) {
 		if (username.equals("defuser") && password.equals("defpass")) {
 			return true;
@@ -222,7 +243,7 @@ public final class Utils {
 		ValueStack stack = ActionContext.getContext().getValueStack();
 		Map<String, Object> context = new HashMap<String, Object>();
 
-		context.put("errorMsg", msg);
+		context.put("msg", msg);
 		stack.push(context);
 	}
 	
@@ -277,7 +298,7 @@ public final class Utils {
 			con = DriverManager.getConnection(dbUrl, user, password);
 			
 			String command = "UPDATE Shows SET "
-					+ "Date='" + show.getDate() 
+					+ "Date='" + show.getDates() 
 					+ "', Title='" + show.getName() 
 					+ "', Description='" + show.getDescription() 
 					+ "', Image_Path='show_image_path.png'" 

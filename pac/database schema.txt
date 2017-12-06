@@ -1,8 +1,32 @@
+datebase name: 'pac'
+
+table schemas:
+
 CREATE TABLE Shows (
-	ID int NOT NULL AUTO_INCREMENT,
-	Date datetime,
-	Title nvarchar(500),
+	ShowID int NOT NULL AUTO_INCREMENT,
+	Title nvarchar(500) NOT NULL,
 	Description nvarchar(3999),
 	Image_Path varchar(1024),
+	FirstDate datetime NOT NULL,
+	LastDate datetime NOT NULL,
+	Duration time,
 	PRIMARY KEY(ID)
+);
+
+CREATE TABLE ShowDates (
+	ShowDateID int NOT NULL AUTO_INCREMENT,
+	ShowID int NOT NULL,
+	Date datetime NOT NULL,
+	PRIMARY KEY(DateID),
+	FOREIGN KEY(ShowID) REFERENCES Shows(ShowID)
+);
+
+// Below schema is untested/unused and is only there for planning
+CREATE TABLE ShowSeats (
+	SeatID int NOT NULL AUTO_INCREMENT,
+	ShowDateID int NOT NULL,
+	Name nvarchar(4) NOT NULL,
+	State nvarchar(50),
+	PRIMARY KEY(SeatID),
+	FOREIGN KEY(ShowDateID) REFERENCES ShowDates(ShowDateID)
 );

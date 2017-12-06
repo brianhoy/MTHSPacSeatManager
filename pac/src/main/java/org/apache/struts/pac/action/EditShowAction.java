@@ -1,6 +1,6 @@
 package org.apache.struts.pac.action;
 
-import org.apache.struts.pac.model.ShowStore;
+import org.apache.struts.pac.model.Show;
 import org.apache.struts.pac.other.Utils;
 import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.util.ValueStack;
@@ -17,8 +17,8 @@ import java.sql.*;
 
 public class EditShowAction extends ActionSupport {
 	private int showid = -1;
-	private ShowStore currentlyEditedShow;
-	private ShowStore show; // used in the form
+	private Show currentlyEditedShow;
+	private Show show; // used in the form
 
 	public String execute() {
 		int showid = Integer.parseInt(ServletActionContext.getRequest().getParameter("showid"));
@@ -28,7 +28,6 @@ public class EditShowAction extends ActionSupport {
 
 			if (currentlyEditedShow == null) {
 				Utils.pushError("Unable to retrieve show " + showid + " for editing.");
-
 				return "error";
 			}
 
@@ -40,15 +39,15 @@ public class EditShowAction extends ActionSupport {
 		return "notloggedin";
 	}
 
-	public ShowStore getShow() {
+	public Show getShow() {
 		return show;
 	}
 
-	public void setShow(ShowStore show) {
+	public void setShow(Show show) {
 		this.show = show;
 	}
 
-	public ShowStore getCurrentlyEditedShow() {
+	public Show getCurrentlyEditedShow() {
 		return currentlyEditedShow;
 	}
 

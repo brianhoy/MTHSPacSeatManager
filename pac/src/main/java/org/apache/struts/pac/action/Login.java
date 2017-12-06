@@ -1,6 +1,8 @@
 package org.apache.struts.pac.action;
 
-import java.util.Map;  
+import java.util.Map;
+
+import org.apache.struts.pac.other.Utils;
 import org.apache.struts2.dispatcher.SessionMap;  
 import org.apache.struts2.interceptor.SessionAware;  
 import com.opensymphony.xwork2.util.ValueStack;
@@ -8,7 +10,7 @@ import com.opensymphony.xwork2.ActionContext;
 import java.util.HashMap;
 
 public class Login implements SessionAware {  
-	private String username, userpass;  
+	private String username, password;  
 	SessionMap<String, String> sessionmap;  
 	  
 	public String getUsername() {  
@@ -20,25 +22,20 @@ public class Login implements SessionAware {
 	}  
 	  
 	public String getUserpass() {  
-	    return userpass;  
+	    return password;  
 	}  
 	  
-	public void setUserpass(String userpass) {  
-	    this.userpass = userpass;  
+	public void setPassword(String password) {  
+	    this.password = password;  
 	}  
 	  
 	public String execute(){
-		ValueStack stack = ActionContext.getContext().getValueStack();
-
-	    if(username.equals("defuser") && userpass.equals("defpass")) {
+	    if(username.equals("defuser") && password.equals("defpass")) {
 		    sessionmap.put("login","true");  
 	        return "success";
-	    }  
+	    }
 	    else {  
-	    	Map<String, Object> context = new HashMap<String, Object>();
-	    	context.put("errorMsg", new String("Invalid user name or password. Try again.")); 
-	    	stack.push(context);
-	    	
+	    	Utils.pushError("Invalid user name or password. Try again.");
 	        return "error";  
 	    }  
 	}  

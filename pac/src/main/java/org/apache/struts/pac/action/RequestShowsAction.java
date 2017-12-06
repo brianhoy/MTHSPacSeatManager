@@ -1,6 +1,6 @@
 package org.apache.struts.pac.action;
 
-import org.apache.struts.pac.model.ShowStore;
+import org.apache.struts.pac.model.Show;
 import org.apache.struts.pac.other.Utils;
 import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.util.ValueStack;
@@ -16,12 +16,12 @@ import javax.servlet.http.HttpSession;
 import java.sql.*;
 
 public class RequestShowsAction extends ActionSupport {
-	ArrayList<ShowStore> shows;
+	ArrayList<Show> shows;
 
 	int helloCount = 5;
 
 	public String execute() {
-		shows = new ArrayList<ShowStore>();
+		shows = new ArrayList<Show>();
 		shows = Utils.getShows();
 
 		String addon = "";
@@ -37,15 +37,7 @@ public class RequestShowsAction extends ActionSupport {
 		}
 	}
 
-	public ArrayList<ShowStore> getShows() {
+	public ArrayList<Show> getShows() {
 		return shows;
-	}
-	
-	public boolean localIsLoggedIn() {
-		HttpServletRequest request = ServletActionContext.getRequest();  
-		HttpSession session = request.getSession();  
-		  
-		String s = (String)session.getAttribute("login");  
-		return (s != null && !s.equals(""));
 	}
 }
