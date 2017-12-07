@@ -1,27 +1,28 @@
 datebase name: 'pac'
 
 table schemas:
+'Duration' is stored in minutes
 
 CREATE TABLE Shows (
 	ShowID int NOT NULL AUTO_INCREMENT,
 	Title nvarchar(500) NOT NULL,
 	Description nvarchar(3999),
-	Image_Path varchar(1024),
+	ImagePath varchar(1024),
 	FirstDate datetime NOT NULL,
-	LastDate datetime NOT NULL,
-	Duration time,
-	PRIMARY KEY(ID)
+	LastDate datetime,
+	Duration int,
+	PRIMARY KEY(ShowID)
 );
 
 CREATE TABLE ShowDates (
 	ShowDateID int NOT NULL AUTO_INCREMENT,
 	ShowID int NOT NULL,
 	Date datetime NOT NULL,
-	PRIMARY KEY(DateID),
+	PRIMARY KEY(ShowDateID),
 	FOREIGN KEY(ShowID) REFERENCES Shows(ShowID)
 );
 
-// Below schema is untested/unused and is only there for planning
+// Below schemas are untested/unused and is only there for planning
 CREATE TABLE ShowSeats (
 	SeatID int NOT NULL AUTO_INCREMENT,
 	ShowDateID int NOT NULL,
@@ -29,4 +30,14 @@ CREATE TABLE ShowSeats (
 	State nvarchar(50),
 	PRIMARY KEY(SeatID),
 	FOREIGN KEY(ShowDateID) REFERENCES ShowDates(ShowDateID)
+);
+
+CREATE TABLE SeatStates (
+	StateID int NOT NULL AUTO_INCREMENT,
+	ShowID int NOT NULL,
+	StateName nvarchar(50) NOT NULL,
+	Price Decimal(19,4) NOT NULL,
+	Color nvarchar(7) NOT NULL,
+	PRIMARY KEY(StateID),
+	FOREIGN KEY(ShowID) REFERENCES Shows(ShowID)
 );

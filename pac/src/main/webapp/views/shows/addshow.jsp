@@ -7,24 +7,29 @@
 	<s:form action="addshow">
 		<div class="form-group">
 			<label class="form-label" for="title">Title</label>
-			<input class="form-input" id="username" type="text" name="show.name" placeholder="Aladdin" />
+			<input class="form-input" type="text" name="showForm.title" placeholder="Aladdin" />
 		</div>
 		<div class="form-group">
 			<label class="form-label" for="description">Description</label>
-			<textarea class="form-input" id="description" rows="3" name="show.description" placeholder="Aladdin is a 1992 American animated comedy musical romantic fantasy adventure film ..."></textarea>
+			<textarea class="form-input" rows="3" name="showForm.description" placeholder="Aladdin is a 1992 American animated comedy musical romantic fantasy adventure film ..."></textarea>
+		</div>
+		<div class="form-group">
+			<label class="form-label">Duration</label>
+			<input class="form-input" type="number" name="showForm.hours" placeholder="Hours" />
+			<input class="form-input" type="number" name="showForm.minutes" placeholder="Minutes" />
 		</div>
 		<div class="form-group">
 			<label class="form-label">Date(s)</label>
 			<ol id="dateList">
 				<li>
 					<div class="asDiv">
-						<input class="form-input datepicker0" id="pacdatepicker" type="text" name="show.date"/>
+						<input class="form-input datepicker0" id="pacdatepicker" type="text"/>
 					</div>
 				</li>
 			</ol>
 		</div>
 		
-		<input type="hidden" id="dateInput" name="show.dates" />
+		<input type="hidden" id="dateInput" name="showForm.dates" />
 		
 		<div class="form-group">
 			<button type="button" onclick="addDate()" class="btn">Add Date</button>

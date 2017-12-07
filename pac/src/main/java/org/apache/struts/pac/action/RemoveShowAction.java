@@ -10,32 +10,35 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.apache.struts.pac.other.ShowDB;
 import org.apache.struts.pac.other.Utils;
 import org.apache.struts2.ServletActionContext;
 
 import java.sql.*;
 
 public class RemoveShowAction extends ActionSupport {
-	private int showid = -1;
-	public Show currentlyEditedShow;
-
 	public String execute() {
-		int showid = Integer.parseInt(ServletActionContext.getRequest().getParameter("showid"));
-
+		int showId = -1;
+		
 		if (!Utils.isLoggedIn()) {
-			Utils.pushError("You must be logged in to edit a show.");
+			Utils.pushError("You must be logged in to remove a show.");
 			return "notloggedin";
 		}
-		if(showid != -1) {
-			Utils.pushError("Unable to delete show with id " + showid + ".");
-			return "error";			
+		
+		try {
+			showId = Integer.parseInt(ServletActionContext.getRequest().getParameter("showId"));
 		}
-		if(!Utils.removeShow(showid)) {
-			Utils.pushError("Unable to delete show with id " + showid + ".");
+		catch(Exception e) {
+			Utils.pushError("Unable to parse show " + ServletActionContext.getRequest().getParameter("showId") + ".");
+		}
+		
+		if(!ShowDB.removeShow(showId)) {
+			Utils.pushError("Unable to delete show with id " + showId + ".");
 			return "error";
 		}
 		
-		Utils.pushMessage("Sucessfully deleted show with id " + showid + ".");			
+		Utils.pushMessage("Sucessfully deleted show with id " + showId + ".");			
 		return "success";
 	}
 }
